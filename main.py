@@ -12,9 +12,8 @@ import sklearn
 import sklearn.datasets
 import sklearn.ensemble
 import sklearn.model_selection
-import logging
 
-logger = logging.getLogger(__name__)
+
 iris = sklearn.datasets.load_iris()
 
 train, test, labels_train, labels_test = sklearn.model_selection.train_test_split(iris.data, iris.target, train_size=0.90)
@@ -36,8 +35,6 @@ def get_prediction():
     data = request.get_json(force=True, silent=True, cache=False)  # Get data posted as a json
     data = np.array(data)[np.newaxis, :]  # converts shape from (4,) to (1, 4)
     model = pickle.load(open('iris.pkl', 'rb'))
-    logger.info("logging data in the logs ------")
-    logger.info(data);
     prediction = model.predict(data)  # runs globally loaded model on the data
     return str(prediction[0])
 
